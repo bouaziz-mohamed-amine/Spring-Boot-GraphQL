@@ -1,4 +1,4 @@
-package com.example.graph;
+package com.example.graph.graphql;
 
 public class Author {
     private String id;

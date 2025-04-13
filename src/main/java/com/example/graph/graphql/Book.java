@@ -1,14 +1,21 @@
-package com.example.graph;
+package com.example.graph.graphql;
 
 public class Book {
     private String id;
     private String title;
     private String authorId;
 
+    private Double price;
+
     public Book(String id, String title, String authorId) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
+    }
+
+    public Book(String id, String title, String authorId, Double price) {
+        this(id,title,authorId);
+        this.price = price;
     }
 
     // Getters and Setters
@@ -34,5 +41,13 @@ public class Book {
 
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
