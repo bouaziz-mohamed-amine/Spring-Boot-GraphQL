@@ -1,9 +1,11 @@
 package com.example.graph.controller;
 
+import com.example.graph.enums.SortType;
 import com.example.graph.graphql.Author;
 import com.example.graph.graphql.Book;
 import com.example.graph.graphql.input.BookInput;
 import com.example.graph.service.BookService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -12,13 +14,13 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.Optional;
-
+import org.slf4j.Logger;
 
 @Controller
 public class BookController {
 
     private final BookService bookService;
+    private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
     @Autowired
     public BookController(BookService bookService) {
@@ -26,8 +28,8 @@ public class BookController {
     }
 
     @QueryMapping
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+    public List<Book> getBooks(@Argument String sortBy, @Argument SortType sortType) {
+        return bookService.getBooks(sortBy, sortType);
     }
 
     @QueryMapping

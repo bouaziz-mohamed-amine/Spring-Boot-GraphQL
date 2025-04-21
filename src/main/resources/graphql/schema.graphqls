@@ -16,8 +16,13 @@ input bookInput {
 }
 
 type Query {
-    getAllBooks: [Book]
+    getBooks(sortBy: String, sortType : SortType = ASC): [Book]
     getBookById(id: ID!): Book
+}
+
+enum SortType {
+    ASC
+    DESC
 }
 
 type Mutation  {
