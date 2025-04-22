@@ -28,8 +28,8 @@ public class BookController {
     }
 
     @QueryMapping
-    public List<Book> getBooks(@Argument String sortBy, @Argument SortType sortType) {
-        return bookService.getBooks(sortBy, sortType);
+    public List<Book> getBooks(@Argument String sortBy, @Argument SortType sortType, @Argument Integer size, @Argument Integer start) {
+        return bookService.getBooks(sortBy, sortType, size, start);
     }
 
     @QueryMapping

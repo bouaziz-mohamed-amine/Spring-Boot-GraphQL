@@ -30,7 +30,7 @@ public class BookService {
         books.add(new Book("3", "Metaphysics", "3"));
     }
 
-    public List<Book> getBooks(String sortBy, SortType sortType) {
+    public List<Book> getBooks(String sortBy, SortType sortType, Integer size, Integer start) {
 
       Comparator<Book> comparator = Comparator.comparing((Book book) -> book.getId());
 
@@ -55,6 +55,8 @@ public class BookService {
 
       return books.stream()
               .sorted(comparator)
+              .skip(start)
+              .limit(size)
                 .collect(Collectors.toList());
     }
 

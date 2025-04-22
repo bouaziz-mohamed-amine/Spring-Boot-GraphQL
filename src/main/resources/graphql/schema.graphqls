@@ -16,7 +16,7 @@ input bookInput {
 }
 
 type Query {
-    getBooks(sortBy: String, sortType : SortType = ASC): [Book]
+    getBooks(sortBy: String, sortType : SortType = ASC, start : Int =0, size : Int=10): [Book]
     getBookById(id: ID!): Book
 }
 
