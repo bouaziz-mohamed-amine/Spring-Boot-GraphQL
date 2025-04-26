@@ -13,6 +13,7 @@ type Book {
 input bookInput {
     id: String !
     title: String,
+    price: Float
 }
 
 type Query {

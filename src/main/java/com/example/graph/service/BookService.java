@@ -1,9 +1,15 @@
 package com.example.graph.service;
 
+import com.example.graph.entity.BookEntity;
 import com.example.graph.enums.SortType;
 import com.example.graph.graphql.Author;
 import com.example.graph.graphql.Book;
 import com.example.graph.graphql.input.BookInput;
+import com.example.graph.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,75 +21,50 @@ import java.util.stream.Collectors;
 @Service
 public class BookService {
 
-    private final List<Book> books = new ArrayList<>();
     private final List<Author> authors = new ArrayList<>();
+    @Autowired
+    private BookRepository bookRepository;
 
     public BookService() {
         // Add sample authors
         authors.add(new Author("1", "J.D. Salinger"));
         authors.add(new Author("2", "Harper Lee"));
         authors.add(new Author("3", "George Orwell"));
-
-        // Add sample books with authorId
-        books.add(new Book("1", "The Catcher in the Rye", "1"));
-        books.add(new Book("2", "To Kill a Mockingbird", "2"));
-        books.add(new Book("3", "Metaphysics", "3"));
     }
 
-    public List<Book> getBooks(String sortBy, SortType sortType, Integer size, Integer start) {
-
-      Comparator<Book> comparator = Comparator.comparing((Book book) -> book.getId());
-
-      if(sortBy != null){
-          switch (sortBy.trim().toLowerCase()) {
-              case "title" :
-                  comparator = Comparator.comparing((Book book) -> book.getTitle());
-                  break;
-              case "id" :
-                  comparator = Comparator.comparing((Book book) -> book.getId());
-                  break;
-              default:
-                  comparator = Comparator.comparing((Book book) -> book.getId());
-                  break;
-          }
-          switch (sortType) {
-              case DESC: comparator=comparator.reversed();
-                  break;
-              default: break;
-          }
-      }
-
-      return books.stream()
-              .sorted(comparator)
-              .skip(start)
-              .limit(size)
-                .collect(Collectors.toList());
+    public List<BookEntity> getBooks(String sortBy, SortType sortType, Integer size, Integer start) {
+        Sort.Direction direction = (sortType == SortType.DESC) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        String fieldToSort = sortBy != null ? sortBy : "id";
+        Sort sort = Sort.by(new Sort.Order(direction,fieldToSort));
+        Pageable pageable = PageRequest.of(start, size, sort);
+        return bookRepository.findAll(pageable).getContent();
     }
 
-    public Book getBookById(Long id) {
-        return books.stream().filter(book -> book.getId().equals(String.valueOf(id))).findFirst().orElse(null);
+    public BookEntity getBookById(Long id) {
+        return bookRepository.findById(id).orElse(null);
     }
 
     public Author getAuthorById(String id) {
         return authors.stream().filter(author -> author.getId().equals(id)).findFirst().orElse(null);
     }
 
-    public Book addBook(BookInput bookInput) {
-        Book book = new Book(bookInput.id(),bookInput.title(),null,null);
-        books.add(book);
+    public BookEntity addBook(BookInput bookInput) {
+        BookEntity book = new BookEntity(null, bookInput.title(), bookInput.price());
+        book = bookRepository.save(book);
         return book;
     }
 
-    public Book updateBook(BookInput book) {
-       Book oldBook = this.getBookById(Long.valueOf(book.id()));
-       oldBook.setTitle(book.title());
-       return oldBook;
+    public BookEntity updateBook(BookInput book) {
+        BookEntity oldBook = this.getBookById(Long.valueOf(book.id()));
+        oldBook.setTitle(book.title());
+        oldBook.setPrice(book.price());
+        return bookRepository.save(oldBook);
     }
 
     public boolean removeBook(Long id) {
-        Book book = this.getBookById(id);
-        if (book != null) {
-            return this.books.remove(book);
+        if (bookRepository.existsById(id)) {
+            bookRepository.deleteById(id);
+            return true;
         }
         return false;
     }
