@@ -3,6 +3,11 @@ type Author {
     name: String
 }
 
+input authorInput {
+    id: String
+    name: String
+}
+
 type Book {
     id: ID !
     title: String
@@ -18,11 +23,6 @@ input bookInput {
     authorId : ID
 }
 
-type Query {
-    getBooks(sortBy: String, sortType : SortType = ASC, start : Int =0, size : Int=10): [Book]
-    getBookById(id: ID!): Book
-}
-
 enum SortType {
     ASC
     DESC
@@ -32,4 +32,11 @@ type Mutation  {
     createBook(book: bookInput !): Book !
     updateBook(book: bookInput !): Book !
     removeBook(id: ID !) : Boolean!
+    createAuthor(author : authorInput) : Author
+}
+
+type Query {
+    getBooks(sortBy: String, sortType : SortType = ASC, start : Int =0, size : Int=10): [Book]
+    getBookById(id: ID!): Book
+    getAuthors : [Author]
 }
