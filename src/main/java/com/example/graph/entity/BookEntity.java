@@ -12,15 +12,18 @@ public class BookEntity {
     private String title;
     @Column(nullable=false)
     private Double price;
+    @ManyToOne()
+    private  AuthorEntity author;
 
-    public BookEntity(Long id, String title, Double price) {
+    public BookEntity(Long id, String title, Double price, Long authorId) {
         this.id = id;
         this.title = title;
         this.price = price;
+//        this.author = new AuthorEntity(authorId,"");
     }
 
-
     public BookEntity() {
+
     }
 
     // Getters and Setters
@@ -46,5 +49,13 @@ public class BookEntity {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public AuthorEntity getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(AuthorEntity author) {
+        this.author = author;
     }
 }

@@ -2,7 +2,6 @@ package com.example.graph.controller;
 
 import com.example.graph.entity.BookEntity;
 import com.example.graph.enums.SortType;
-import com.example.graph.graphql.Author;
 import com.example.graph.graphql.input.BookInput;
 import com.example.graph.service.BookService;
 import org.slf4j.LoggerFactory;
@@ -39,9 +38,11 @@ public class BookController {
     }
 
     // Dynamically resolve the `author` field in `Book` based on `authorId`
-    @SchemaMapping(typeName = "Book", field = "author")
-    public Author getAuthor(BookEntity book) {
-        return bookService.getAuthorById(String.valueOf(1));
+    @SchemaMapping(typeName = "Book", field = "authorId")
+    public Long getAuthor(BookEntity book) {
+        if(book.getAuthor() != null)
+            return  book.getAuthor().getId();
+        return null;
     }
 
     @MutationMapping

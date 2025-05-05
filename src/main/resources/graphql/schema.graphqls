@@ -8,12 +8,14 @@ type Book {
     title: String
     author: Author
     price : Float
+    authorId : Float
 }
 
 input bookInput {
-    id: String !
-    title: String,
-    price: Float
+    id: String
+    title: String!,
+    price: Float!
+    authorId : ID
 }
 
 type Query {
