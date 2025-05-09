@@ -1,23 +1,32 @@
 # Spring Boot + GraphQL
 
-## Project Overview:
-This is a simple Spring Boot project that demonstrates the use of GraphQL for querying and managing relationships between entities. The project models a **Book** and its **Author** with a one-to-one relationship, allowing users to fetch, create, update, and delete books and their respective authors using GraphQL **queries** and **mutations**.
+## 📚 Project Overview
 
-## Features 
+This is a simple Spring Boot project demonstrating how to use GraphQL to query and manage relationships between entities. It models a **Book** and its **Author** with a **many-to-one** relationship, allowing clients to perform CRUD operations on both using GraphQL **queries** and **mutations**.
 
-- **GraphQL API** for querying and mutating books and authors.
-- Support for querying:
-  - Books with **pagination** and **sorting**.
-  - A specific book by its ID.
-  - Authors and their details.
-- Support for mutations:
-  - Create a new book.
-  - Update an existing book.
-  - Delete a book.
-- **Dynamic resolution** of `author` field in `Book` using `authorId`.
+## ✨ Features
 
-  
-## Technologies Used
+This project is organized into two main branches, each with distinct implementations:
 
-- **Spring Boot**: Backend framework.
-- **GraphQL**: For API design and query language.
+### 🔹 `feature/v1-graphql-book-crud`
+- Book CRUD operations using **static in-memory data**.
+- No database integration.
+- Simple GraphQL schema and resolvers.
+
+### 🔹 `feature/v2-spring-data`
+- Book and Author CRUD operations using **Spring Data JPA** with **PostgreSQL**.
+- GraphQL schema supports relational mapping (many-to-one between Book and Author).
+- Advanced features:
+  - Pagination and sorting of books.
+  - Fetch specific book by ID.
+  - Author details with associated books.
+  - Create, update, delete book mutations.
+  - Dynamic resolution of `author` field in `Book` using `authorId`.
+
+## 🛠 Technologies Used
+
+- **Spring Boot** – Backend framework.
+- **GraphQL** – API design and query language.
+- **PostgreSQL** – Relational database used for persisting books and authors.
+- **pgAdmin** – GUI tool for managing PostgreSQL.
+- **Docker Compose** – Container orchestration tool to run PostgreSQL and pgAdmin together.
