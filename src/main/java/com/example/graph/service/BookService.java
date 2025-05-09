@@ -39,9 +39,19 @@ public class BookService {
     }
 
     public BookEntity addBook(BookInput bookInput) {
-        BookEntity book = new BookEntity(null, bookInput.title(), bookInput.price(),bookInput.authorId());
-        book = bookRepository.save(book);
-        return book;
+        Long authorId = bookInput.author().id();
+        AuthorEntity authorEntity;
+
+        if (authorRepository.existsById(authorId)) {
+            authorEntity = authorRepository.getReferenceById(authorId);
+        } else {
+            authorEntity = authorRepository.save(
+                    new AuthorEntity(null, bookInput.author().name())
+            );
+        }
+
+        BookEntity book = new BookEntity(null, bookInput.title(), bookInput.price(), authorEntity);
+        return bookRepository.save(book);
     }
 
     public BookEntity updateBook(BookInput book) {
