@@ -1,5 +1,6 @@
 package com.example.graph.graphql;
 
+@Deprecated
 public class Author {
     private String id;
     private String name;

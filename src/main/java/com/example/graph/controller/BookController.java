@@ -1,8 +1,7 @@
 package com.example.graph.controller;
 
+import com.example.graph.entity.BookEntity;
 import com.example.graph.enums.SortType;
-import com.example.graph.graphql.Author;
-import com.example.graph.graphql.Book;
 import com.example.graph.graphql.input.BookInput;
 import com.example.graph.service.BookService;
 import org.slf4j.LoggerFactory;
@@ -28,30 +27,32 @@ public class BookController {
     }
 
     @QueryMapping
-    public List<Book> getBooks(@Argument String sortBy, @Argument SortType sortType, @Argument Integer size, @Argument Integer start) {
+    public List<BookEntity> getBooks(@Argument String sortBy, @Argument SortType sortType, @Argument Integer size, @Argument Integer start) {
         return bookService.getBooks(sortBy, sortType, size, start);
     }
 
     @QueryMapping
-    public Book getBookById(@Argument Long id) {
-        Book book = bookService.getBookById(id);
-        return book; // Return null if not found
+    public BookEntity getBookById(@Argument Long id) {
+        BookEntity book = bookService.getBookById(id);
+        return book;
     }
 
     // Dynamically resolve the `author` field in `Book` based on `authorId`
-    @SchemaMapping(typeName = "Book", field = "author")
-    public Author getAuthor(Book book) {
-        return bookService.getAuthorById(book.getAuthorId());
+    @SchemaMapping(typeName = "Book", field = "authorId")
+    public Long getAuthor(BookEntity book) {
+        if(book.getAuthor() != null)
+            return  book.getAuthor().getId();
+        return null;
     }
 
     @MutationMapping
-    public Book createBook(@Argument BookInput book) {
-        Book createdBook = bookService.addBook(book);
+    public BookEntity createBook(@Argument BookInput book) {
+        BookEntity createdBook = bookService.addBook(book);
         return createdBook; // Return null if not found
     }
     @MutationMapping
-    public Book updateBook(@Argument BookInput book) {
-        Book updatedBook = bookService.updateBook(book);
+    public BookEntity updateBook(@Argument BookInput book) {
+        BookEntity updatedBook = bookService.updateBook(book);
         return updatedBook; // Return null if not found
     }
 

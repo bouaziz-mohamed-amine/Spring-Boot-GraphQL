@@ -1,5 +1,6 @@
 package com.example.graph.graphql;
 
+@Deprecated
 public class Book {
     private String id;
     private String title;
