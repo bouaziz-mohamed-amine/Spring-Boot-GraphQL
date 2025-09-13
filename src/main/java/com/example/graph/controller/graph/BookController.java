@@ -1,4 +1,4 @@
-package com.example.graph.controller;
+package com.example.graph.controller.graph;
 
 import com.example.graph.entity.BookEntity;
 import com.example.graph.enums.SortType;
