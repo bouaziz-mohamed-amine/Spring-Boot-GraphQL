@@ -19,7 +19,8 @@ public class SecurityFilter {
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for API
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").hasRole("ADMIN") // Protect /graphql
-                        .anyRequest().permitAll()  // Everything else is public
+                        .requestMatchers("/rest/auth/login").permitAll()  // Login is public
+                        .anyRequest().permitAll() // everything else requires login
                 )
                 .httpBasic(Customizer.withDefaults()); // Use basic auth (username/password)
         return http.build();
