@@ -1,7 +1,16 @@
 package com.example.graph.rest.dto.auth;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class LoginRequest {
+
+    @NotNull
+    @NotEmpty
     private String username;
+    @NotNull
+    @NotEmpty
     private String password;
 
     public LoginRequest(String username, String password) {
