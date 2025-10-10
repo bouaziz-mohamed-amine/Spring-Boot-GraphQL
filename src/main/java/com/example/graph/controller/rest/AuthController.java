@@ -1,19 +1,17 @@
-package com.example.graph.rest;
+package com.example.graph.controller.rest;
 
 
+import com.example.graph.controller.rest.dto.auth.LoginRequest;
 import com.example.graph.entity.UserEntity;
 import com.example.graph.enums.ROLE;
 import com.example.graph.repository.UserRepository;
-import com.example.graph.rest.dto.auth.LoginRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
 
 @RestController
 @RequestMapping("/rest/auth")

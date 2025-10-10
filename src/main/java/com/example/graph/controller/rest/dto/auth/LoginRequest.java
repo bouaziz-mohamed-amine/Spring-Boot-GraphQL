@@ -1,6 +1,5 @@
-package com.example.graph.rest.dto.auth;
+package com.example.graph.controller.rest.dto.auth;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
