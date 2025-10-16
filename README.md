@@ -30,3 +30,4 @@ This project is organized into two main branches, each with distinct implementat
 - **PostgreSQL** – Relational database used for persisting books and authors.
 - **pgAdmin** – GUI tool for managing PostgreSQL.
 - **Docker Compose** – Container orchestration tool to run PostgreSQL and pgAdmin together.
+- **Spring Security** – Security framework used to handle authentication and authorization.
